@@ -1,9 +1,10 @@
 from flask import Flask, request
 import sqlite3
+from socket import gethostname
 
 app = Flask(__name__)
 
-DATABASE = 'database/db_alert.db'
+DATABASE = '/home/eriksoaress/flood-alert-heliopolis-main/back/database/db_alert.db'
 
 
 @app.route('/usuarios', methods=['GET'])
@@ -46,21 +47,22 @@ def post_usuarios():
 
 @app.route('/usuarios/<int:id>', methods=['DELETE'])
 def delete_usuarios(id):
-    
+
     conn = sqlite3.connect(DATABASE, check_same_thread=False)
-    
+
     conn.execute('DELETE FROM usuarios WHERE id = ?', (id,))
-    
+
     conn.commit()
     conn.close()
-    
-    return {'mensagem': 'Usuário excluído com sucesso!'}, 200   
 
-    
-    
+    return {'mensagem': 'Usuário excluído com sucesso!'}, 200
+
+
+
 
 
 if __name__ == '__main__':
-    app.run()
+    if 'liveconsole' not in gethostname():
+        app.run()
 
 
