@@ -9,6 +9,7 @@ import os
 
 app = Flask(__name__)
 
+TYPEFORM_SECRET_KEY='123'
 DATABASE = '/home/eriksoaress/flood-alert-heliopolis-main/back/database/db_alert.db'
 
 
@@ -42,33 +43,28 @@ def post_usuarios():
     receivedSignature = request.headers.get("typeform-signature")
     
     if receivedSignature is None:
-      return {'error': 'Permission denied.'}, 403
-      
-    sha_name, signature = receivedSignature.split('=', 1)
-    if sha_name != 'sha256':
-      return {'error': 'Operation not supported.'}, 501
+     return {'error': 'Permission denied.'}, 403
     
-    is_valid = verifySignature(signature, request)
     
-    if(is_valid != True):
-      return {'error': 'Invalid signature. Permission Denied.'}, 403
+    if(receivedSignature != TYPEFORM_SECRET_KEY):
+     return {'error': 'Invalid signature. Permission Denied.'}, 403
     
     conn = sqlite3.connect(DATABASE, check_same_thread=False)
 
-    questions = request.json['form_response']['definition']['fields']
-    answers = request.json['form_response']['answers']
+    questions = request.json['form']['questions']
+    answers = request.json['answer']['answers']
 
     for ans in answers:
-       ans_id = ans['field']['id']
+       ans_id = ans['q']
 
        for ques in questions:
-          if ques['id'] == ans_id:
-            if 'nome' in ques['title']:
-               nome  = ans['text']
-            if 'celular' in ques['title']:
-               numero = ans['text']
-            if 'região' in ques['title']:
-               regiao = ans['choice']['label']
+          if ques['_id'] == ans_id:
+            if 'nome' in ques['question']:
+               nome  = ans['t']
+            if 'celular' in ques['question']:
+               numero = ans['t']
+            if 'Em qual' in ques['question']:
+               regiao = ans['c'][0]['t']
 
 
     conn.execute('INSERT INTO usuarios (nome, regiao, numero) VALUES (?, ?, ?)', (nome, regiao, numero))
@@ -77,16 +73,6 @@ def post_usuarios():
     conn.close()
 
     return {'mensagem': 'Usuário cadastrado com sucesso!'}, 201
-    
-    
-def verifySignature(receivedSignature: str, payload):
-    WEBHOOK_SECRET = os.environ.get('TYPEFORM_SECRET_KEY')
-    digest = hmac.new(WEBHOOK_SECRET.encode('utf-8'), payload, hashlib.sha256).digest()
-    e = base64.b64encode(digest).decode()
-    
-    if(e == receivedSignature):
-      return True
-    return False
 
 
 
