@@ -5,10 +5,11 @@ app = Flask(__name__)
 
 DATABASE = 'database/db_alert.db'
 
-conn = sqlite3.connect(DATABASE, check_same_thread=False)
 
 @app.route('/usuarios', methods=['GET'])
 def get_usuarios():
+
+    conn = sqlite3.connect(DATABASE, check_same_thread=False)
 
     cursor = conn.execute('SELECT * FROM usuarios')
 
@@ -30,7 +31,7 @@ def get_usuarios():
 @app.route('/usuarios', methods=['POST'])
 def post_usuarios():
 
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(DATABASE, check_same_thread=False)
 
     nome = request.json['nome']
     regiao = request.json['regiao']
@@ -43,11 +44,23 @@ def post_usuarios():
 
     return {'mensagem': 'Usuário cadastrado com sucesso!'}, 201
 
+@app.route('/usuarios/<int:id>', methods=['DELETE'])
+def delete_usuarios(id):
+    
+    conn = sqlite3.connect(DATABASE, check_same_thread=False)
+    
+    conn.execute('DELETE FROM usuarios WHERE id = ?', (id,))
+    
+    conn.commit()
+    conn.close()
+    
+    return {'mensagem': 'Usuário excluído com sucesso!'}, 200   
+
     
     
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 
 
