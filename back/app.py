@@ -1,13 +1,10 @@
 from flask import Flask, request
 import sqlite3
 from socket import gethostname
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
 app = Flask(__name__)
 
-
+TYPEFORM_SECRET_KEY='123'
 DATABASE = '/home/eriksoaress/flood-alert-heliopolis-main/back/database/db_alert.db'
 
 
@@ -43,8 +40,8 @@ def post_usuarios():
     if receivedSignature is None:
      return {'error': 'Permission denied.'}, 403
     
-    sk = os.getenv("TYPEFORM_SECRET_KEY")
-    if(receivedSignature != sk):
+    
+    if(receivedSignature != TYPEFORM_SECRET_KEY):
      return {'error': 'Invalid signature. Permission Denied.'}, 403
     
     conn = sqlite3.connect(DATABASE, check_same_thread=False)

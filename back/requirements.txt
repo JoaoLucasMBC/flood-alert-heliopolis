@@ -1,6 +1,7 @@
 Flask
 pandas
 gspread
+python-dotenv
 
 #api de autenticação do google
 google-api-python-client 
