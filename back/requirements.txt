@@ -1,6 +1,4 @@
 Flask
-pandas
-gspread
 python-dotenv
 Flask-APScheduler
 Flask-SQLAlchemy

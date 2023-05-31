@@ -14,21 +14,9 @@ class ListUsuario(Resource):
         return {'usuarios': [usuario.to_dict() for usuario in usuarios]}, 200
 
 
-class Usuario(Resource):
-
-    def get(self, usuario_id):
-
-        usuario = UsuarioModel.find_by_id(id=usuario_id).first()
-
-        if usuario:
-            return usuario.to_dict(), 200
-        
-        return {'message': 'Usuario not found.'}, 404
-
-
     def post(self):
 
-        receivedSignature = request.headers.get("typeform-signature")
+        receivedSignature = request.headers.get("Secret")
     
         if receivedSignature is None:
             return {'error': 'Permission denied.'}, 403
@@ -57,6 +45,18 @@ class Usuario(Resource):
         usuario.save()
 
         return usuario.to_dict(), 201
+
+
+class Usuario(Resource):
+
+    def get(self, usuario_id):
+
+        usuario = UsuarioModel.find_by_id(id=usuario_id).first()
+
+        if usuario:
+            return usuario.to_dict(), 200
+        
+        return {'message': 'Usuario not found.'}, 404
 
 
     def delete(self, usuario_id):
