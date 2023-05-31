@@ -12,7 +12,8 @@ def get_json_from_api(url):
 def create_url(date=None):
     if date is None:
         date = get_date_tomorrow()
-    return f"https://api.open-meteo.com/v1/forecast?latitude=-23.6045&longitude=-46.5983&hourly=precipitation_probability,precipitation&daily=precipitation_sum&forecast_days=1&start_date={date}&end_date={date}&timezone=America%2FSao_Paulo"
+    #return f"https://api.open-meteo.com/v1/forecast?latitude=-23.6045&longitude=-46.5983&hourly=precipitation_probability,precipitation&daily=precipitation_sum&forecast_days=1&start_date={date}&end_date={date}&timezone=America%2FSao_Paulo"
+    return f'http://api.weatherapi.com/v1/forecast.json?key=52b5fb87e51a4a50ab6134613233005&q=-23.606820,-46.596861&days=7'
     
 def get_date_tomorrow():
     tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
