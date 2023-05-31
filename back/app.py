@@ -1,66 +1,50 @@
-from flask import Flask, request
-import sqlite3
+from flask import Flask 
+from flask_restful import Api
+from flask_apscheduler import APScheduler
+
+from model.sql_alchemy_flask import db
+from pathlib import Path
+
+from resources.usuario_rotas import Usuario, ListUsuario
+
+from socket import gethostname
+
+
+# Resistente a sistema operacional
+FILE = Path(__file__).resolve()
+src_folder = FILE.parents[0]
+# caminho para a base
+rel_arquivo_db = Path('model/db_alert.db')
+caminho_arq_db = src_folder / rel_arquivo_db
+
 
 app = Flask(__name__)
-
-DATABASE = 'database/db_alert.db'
-
-
-@app.route('/usuarios', methods=['GET'])
-def get_usuarios():
-
-    conn = sqlite3.connect(DATABASE, check_same_thread=False)
-
-    cursor = conn.execute('SELECT * FROM usuarios')
-
-    usuarios = []
-
-    for linha in cursor:
-        usuario = {
-            'id': linha[0],
-            'nome': linha[1],
-            'regiao': linha[2],
-            'numero': linha[3]
-        }
-        usuarios.append(usuario)
-
-    conn.close()
-
-    return {'usuarios': usuarios}, 200
-
-@app.route('/usuarios', methods=['POST'])
-def post_usuarios():
-
-    conn = sqlite3.connect(DATABASE, check_same_thread=False)
-
-    nome = request.json['nome']
-    regiao = request.json['regiao']
-    numero = request.json['numero']
-
-    conn.execute('INSERT INTO usuarios (nome, regiao, numero) VALUES (?, ?, ?)', (nome, regiao, numero))
-
-    conn.commit()
-    conn.close()
-
-    return {'mensagem': 'Usuário cadastrado com sucesso!'}, 201
-
-@app.route('/usuarios/<int:id>', methods=['DELETE'])
-def delete_usuarios(id):
-    
-    conn = sqlite3.connect(DATABASE, check_same_thread=False)
-    
-    conn.execute('DELETE FROM usuarios WHERE id = ?', (id,))
-    
-    conn.commit()
-    conn.close()
-    
-    return {'mensagem': 'Usuário excluído com sucesso!'}, 200   
-
-    
-    
+sched = APScheduler()
 
 
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{caminho_arq_db.resolve()}'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+api = Api(app)
+
+
+def check_weather():
+   print('checked!')
+
+
+@app.route("/")
+def hello_world():
+    return f"<p>Hello, World!</p>"
+
+
+api.add_resource(ListUsuario, '/usuario')
+api.add_resource(Usuario, '/usuario/<int:usuario_id>')
+
+
+db.init_app(app)
 if __name__ == '__main__':
-    app.run()
+    db.init_app(app)
+    sched.add_job(id='check_weather', func=check_weather, trigger='cron', day_of_week='mon-sun', hour=5, minute=0)
+    sched.start()
 
-
+    if 'liveconsole' not in gethostname():
+        app.run(use_reloader=False, debug=True)
