@@ -1,8 +1,10 @@
 from flask import Flask, request
 import sqlite3
 from socket import gethostname
+from flask_apscheduler import APScheduler
 
 app = Flask(__name__)
+sched = APScheduler()
 
 TYPEFORM_SECRET_KEY='123'
 DATABASE = '/home/eriksoaress/flood-alert-heliopolis-main/back/database/db_alert.db'
@@ -84,9 +86,12 @@ def delete_usuarios(id):
     return {'mensagem': 'Usuário excluído com sucesso!'}, 200
 
 
-
+def check_weather():
+   print('checked!')
 
 
 if __name__ == '__main__':
+    sched.add_job(id='check_weather', func=check_weather, trigger='cron', day_of_week='mon-sun', hour=5, minute=0)
+    sched.start()
     if 'liveconsole' not in gethostname():
-        app.run()
+        app.run(use_reloader=False)

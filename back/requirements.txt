@@ -2,6 +2,7 @@ Flask
 pandas
 gspread
 python-dotenv
+Flask-APScheduler
 
 #api de autenticação do google
 google-api-python-client 
