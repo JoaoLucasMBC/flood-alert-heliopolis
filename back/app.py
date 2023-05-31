@@ -43,10 +43,10 @@ def check_weather_today():
     if verify_risk_today():
         sched.remove_job('check_weather_today')
         print('tá chovendo pa caraio!')
-        #msg2 = {"text":"Teste de mensagem no grupo"}
-        #myapikey = "3ef74400e8msh11f3728c6fb249fp112f4fjsnc487dd3c2fbf"
-        #mygroup = "120363142240766611"
-        #sendWSP(msg2, myapikey, mygroup)
+        msg2 = {"text":"Mensagem de que tá chovendo muito hoje"}
+        myapikey = "3ef74400e8msh11f3728c6fb249fp112f4fjsnc487dd3c2fbf"
+        mygroup = "120363142240766611"
+        sendWSP(msg2, myapikey, mygroup)
     else:
         print('não tá chovendo tanto!')
 
@@ -55,7 +55,7 @@ def check_weather_tomorrow():
     print('checked!')
     if verify_risk_tomorrow():
         print('tá chovendo pa caraio!')
-        msg2 = {"text":"Teste de mensagem no grupo"}
+        msg2 = {"text":"Mensagem de que vai chover amanhã cpa"}
         myapikey = "3ef74400e8msh11f3728c6fb249fp112f4fjsnc487dd3c2fbf"
         mygroup = "120363142240766611"
         sendWSP(msg2, myapikey, mygroup)
