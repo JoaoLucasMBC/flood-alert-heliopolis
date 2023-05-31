@@ -3,8 +3,5 @@ pandas
 gspread
 python-dotenv
 Flask-APScheduler
-
-#api de autenticação do google
-google-api-python-client 
-google-auth-httplib2 
-google-auth-oauthlib
+Flask-SQLAlchemy
+Flask-RESTful
