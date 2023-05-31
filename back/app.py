@@ -4,9 +4,11 @@ from flask_apscheduler import APScheduler
 
 from model.sql_alchemy_flask import db
 from pathlib import Path
+import datetime
 
 from resources.usuario_rotas import Usuario, ListUsuario
 from disparo import sendWSP
+from checa_clima import verify_risk
 
 from socket import gethostname
 from dotenv import load_dotenv
@@ -31,15 +33,16 @@ api = Api(app)
 
 
 def check_weather():
-   print('checked!')
-   vai_chover = False
-
-   if vai_chover:
+    print("Verificando clima...")
+    print('checked!')
+    if verify_risk():
         print('vai chover!')
         msg2 = {"text":"Teste de mensagem no grupo"}
         myapikey = "3ef74400e8msh11f3728c6fb249fp112f4fjsnc487dd3c2fbf"
         mygroup = "120363142240766611"
         sendWSP(msg2, myapikey, mygroup)
+    else:
+        print('não vai chover!')
 
 
 @app.route("/")
@@ -52,9 +55,11 @@ api.add_resource(Usuario, '/usuario/<int:usuario_id>')
 
 
 db.init_app(app)
+#sched.add_job(id='check_weather', func=check_weather, trigger='cron', day_of_week='mon-sun', hour=13, minute=5)
+sched.add_job(id='check_weather', func=check_weather, trigger='interval', seconds=10)
+sched.start()
+
 if __name__ == '__main__':
-    sched.add_job(id='check_weather', func=check_weather, trigger='cron', day_of_week='mon-sun', hour=5, minute=0)
-    sched.start()
 
     if 'liveconsole' not in gethostname():
         app.run(use_reloader=False, debug=True)
