@@ -40,6 +40,7 @@ api.add_resource(ListUsuario, '/usuario')
 api.add_resource(Usuario, '/usuario/<int:usuario_id>')
 
 
+db.init_app(app)
 if __name__ == '__main__':
     db.init_app(app)
     sched.add_job(id='check_weather', func=check_weather, trigger='cron', day_of_week='mon-sun', hour=5, minute=0)
