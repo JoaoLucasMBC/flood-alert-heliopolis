@@ -6,8 +6,10 @@ from model.sql_alchemy_flask import db
 from pathlib import Path
 
 from resources.usuario_rotas import Usuario, ListUsuario
+from disparo import sendWSP
 
 from socket import gethostname
+from dotenv import load_dotenv
 
 
 # Resistente a sistema operacional
@@ -20,6 +22,7 @@ caminho_arq_db = src_folder / rel_arquivo_db
 
 app = Flask(__name__)
 sched = APScheduler()
+load_dotenv()
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{caminho_arq_db.resolve()}'
@@ -29,6 +32,14 @@ api = Api(app)
 
 def check_weather():
    print('checked!')
+   vai_chover = False
+
+   if vai_chover:
+        print('vai chover!')
+        msg2 = {"text":"Teste de mensagem no grupo"}
+        myapikey = "3ef74400e8msh11f3728c6fb249fp112f4fjsnc487dd3c2fbf"
+        mygroup = "120363142240766611"
+        sendWSP(msg2, myapikey, mygroup)
 
 
 @app.route("/")
@@ -42,7 +53,6 @@ api.add_resource(Usuario, '/usuario/<int:usuario_id>')
 
 db.init_app(app)
 if __name__ == '__main__':
-    db.init_app(app)
     sched.add_job(id='check_weather', func=check_weather, trigger='cron', day_of_week='mon-sun', hour=5, minute=0)
     sched.start()
 
