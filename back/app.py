@@ -37,7 +37,7 @@ def get_usuarios():
 @app.route('/usuarios', methods=['POST'])
 def post_usuarios():
   
-    receivedSignature = request.headers.get("typeform-signature")
+    receivedSignature = request.headers.get("Secret")
     
     if receivedSignature is None:
      return {'error': 'Permission denied.'}, 403
