@@ -19,7 +19,7 @@ def sendWSP(message, apikey,gid=0):
 # Testing Section
 msg2 = {"text":"Teste de mensagem no grupo"}
 
-myapikey = "3ef74400e8msh11f3728c6fb249fp112f4fjsnc487dd3c2fbf"
-mygroup = "120363142240766611"
+myapikey = "77976d3475msh4020c0569dd11dap121e22jsn7815e2cd58ef"
+mygroup = "120363142392509038"
 
 sendWSP(msg2, myapikey,mygroup)
