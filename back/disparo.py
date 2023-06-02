@@ -1,4 +1,5 @@
 import requests
+import os
 
 
 def sendWSP(message, apikey, gid=0):
@@ -25,7 +26,7 @@ def sendWSP(message, apikey, gid=0):
 if __name__ == "__main__":
     msg2 = {"text":"Teste de mensagem no grupo"}
 
-    myapikey = "3ef74400e8msh11f3728c6fb249fp112f4fjsnc487dd3c2fbf"
-    mygroup = "120363142240766611"
+    myapikey = os.environ.get('WHIN_API_KEY')
+    mygroup = os.environ.get('GROUP_ID')
 
     sendWSP(msg2, myapikey, mygroup)

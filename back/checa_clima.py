@@ -1,5 +1,6 @@
 import requests
 import datetime
+import os
 
 def get_json_from_api(url):
     response = requests.get(url)
@@ -29,7 +30,7 @@ def verify_risk_today():
 
 
 def verify_risk_tomorrow():
-    url = f'http://api.weatherapi.com/v1/forecast.json?key=52b5fb87e51a4a50ab6134613233005&q=-23.606820,-46.596861&days=7'
+    url = f'http://api.weatherapi.com/v1/forecast.json?key={os.environ.get("WEATHER_API_KEY")}&q=-23.606820,-46.596861&days=7'
     json = get_json_from_api(url)
 
     try:
