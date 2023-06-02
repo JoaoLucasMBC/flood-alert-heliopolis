@@ -17,13 +17,15 @@ def verify_risk_climatempo():
     today = data[0]['date_br'][:10]
     tomorrow = data[25]['date_br'][:10]
     for hora in data:
-        if hora['date_br'][:10] == today:
+        if hora['date_br'][:10] == today and hora['rain']['precipitation'] != None:
             dict_data['today'] += hora['rain']['precipitation']
-        elif hora['date_br'][:10] == tomorrow:
+        elif hora['date_br'][:10] == tomorrow and  hora['rain']['precipitation'] != None:
             dict_data['tomorrow'] += hora['rain']['precipitation']
 
-    #adicionar verificação se tem risco ou nn
-    return dict_data
+    #adicionar verificação se tem risco
+    if dict_data['tomorrow'] > 30:
+        return True
+    return False
 
 print(verify_risk_climatempo())
 
