@@ -89,10 +89,10 @@ api.add_resource(Usuario, '/usuario/<int:usuario_id>')
 db.init_app(app)
 
 # inicializa as taerfas e os horários
-sched.add_job(id='start_tasks', func=start_tasks, trigger='cron', day_of_week='mon-sun', hour=0, minute=0)
-sched.add_job(id='check_weather_tomorrow', func=check_weather_tomorrow, trigger='cron', day_of_week='mon-sun', hour=20, minute=0)
-sched.add_job(id='check_weather_today', func=check_weather_today, trigger='interval', hours=2)
-sched.start()
+#sched.add_job(id='start_tasks', func=start_tasks, trigger='cron', day_of_week='mon-sun', hour=0, minute=0)
+#sched.add_job(id='check_weather_tomorrow', func=check_weather_tomorrow, trigger='cron', day_of_week='mon-sun', hour=20, minute=0)
+#sched.add_job(id='check_weather_today', func=check_weather_today, trigger='interval', hours=2)
+#sched.start()
 
 if __name__ == '__main__':
 
