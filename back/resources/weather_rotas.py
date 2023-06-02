@@ -3,7 +3,7 @@ from flask_restful import Resource
 from disparo import sendWSP
 from checa_clima import verify_risk_today, verify_risk_tomorrow
 
-import os
+from environ import GROUP_ID, WHIN_API_KEY
 
 
 class WeatherToday(Resource):
@@ -18,8 +18,8 @@ class WeatherToday(Resource):
         if verify_risk_today():
             print('tá chovendo pa caraio!')
             msg2 = {"text":"Mensagem de que tá chovendo muito hoje"}
-            myapikey = os.environ.get('WHIN_API_KEY')
-            mygroup = os.environ.get('GROUP_ID')
+            myapikey = WHIN_API_KEY
+            mygroup = GROUP_ID
             sendWSP(msg2, myapikey, mygroup)
 
             return {'message': 'there is risk today'}, 200
@@ -40,8 +40,8 @@ class WeatherTomorrow(Resource):
         if verify_risk_tomorrow():
             print('tá chovendo pa caraio!')
             msg2 = {"text":"Mensagem de que vai chover amanhã cpa"}
-            myapikey = os.environ.get('WHIN_API_KEY')
-            mygroup = os.environ.get('GROUP_ID')
+            myapikey = WHIN_API_KEY
+            mygroup = GROUP_ID
             sendWSP(msg2, myapikey, mygroup)
 
             return {'message': 'there is risk tomorrow'}, 200

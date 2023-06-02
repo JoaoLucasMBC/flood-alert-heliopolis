@@ -1,5 +1,5 @@
 import requests
-import os
+from environ import GROUP_ID, WHIN_API_KEY
 
 
 def sendWSP(message, apikey, gid=0):
@@ -44,7 +44,7 @@ def sendWSP(message, apikey, gid=0):
 if __name__ == "__main__":
     msg2 = {"text":"Teste de mensagem no grupo"}
 
-    myapikey = os.environ.get('WHIN_API_KEY')
-    mygroup = os.environ.get('GROUP_ID')
+    myapikey = WHIN_API_KEY
+    mygroup = GROUP_ID
 
     sendWSP(msg2, myapikey, mygroup)
