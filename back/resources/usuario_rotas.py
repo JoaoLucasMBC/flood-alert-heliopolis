@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request
 from model.models import UsuarioModel
 
-from webhook_token import TYPEFORM_SECRET_KEY
+import os
 
 
 class ListUsuario(Resource):
@@ -22,7 +22,7 @@ class ListUsuario(Resource):
             return {'error': 'Permission denied.'}, 403
         
         
-        if(receivedSignature != TYPEFORM_SECRET_KEY):
+        if(receivedSignature != os.environ.get('TYPEFORM_SECRET_KEY')):
             return {'error': 'Invalid signature. Permission Denied.'}, 403
         
         questions = request.json['form']['questions']
