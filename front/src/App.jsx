@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import NavBar from './components/NavBar.jsx'
 import helipa from './assets/helipa.jpeg'
-import insper from './assets/insper-logo.png'
+import insper from './assets/logo-insper.png'
 import celular from './assets/celular.png'
 import form from './assets/form.png'
 
