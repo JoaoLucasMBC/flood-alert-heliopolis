@@ -127,9 +127,9 @@ Nesta página, o usuário informará alguns dados pessoais:
 
 Após o cadastro, o usuário será redirecionado para um link em que ele poderá entrar no grupo do WhatsApp, onde os alertas serão enviados. Além disso, já em relação ao back-end, o usuário será cadastrado no banco de dados através de uma rota em Flask (framework web em Python), a qual receberá os dados do formulário e os armazenará no banco de dados (POST).
 
-Com o usuário já cadastrado no sistema, para que este receba os alertas de enchente, são utilizadas duas APIs: uma para a questão do clima e outra para o envio de mensagens via WhatsApp. 
+Com o usuário já cadastrado no sistema, para que este receba os alertas de enchente, são utilizadas quatro APIs: três para a questão do clima (WeatherAPI, Climatempo e Open-Meteo) e outra para o envio de mensagens via WhatsApp (Whin). 
 
-A API de clima é utilizada para verificar a previsão do tempo para a região de Heliópolis, e a partir dos dados coletados, o sistema determina se há risco de enchente ou não. Desta forma, o sistema dispara um alerta para todos os usuários cadastrados, informando-os sobre a situação naquele momento, e também sobre a previsão para o dia seguinte por volta das 20h.
+As API de clima são utilizadas para verificar a previsão do tempo para a região de Heliópolis, e a partir dos dados coletados, o sistema determina se há risco de enchente ou não. Desta forma, o sistema dispara um alerta para todos os usuários cadastrados, informando-os sobre a situação naquele momento, e também sobre a previsão para o dia seguinte por volta das 20h.
 
 A API relacionada ao envio de mensagens realiza justamente a função do disparo de mensagens via WhatsApp. Para isso, o sistema envia no grupo formado por todos os usuários cadastrados a mensagem com o alerta de enchente.
 
