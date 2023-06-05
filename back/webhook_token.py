@@ -1,1 +1,0 @@
-TYPEFORM_SECRET_KEY = 'leoscarlato'
