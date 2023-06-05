@@ -117,7 +117,7 @@ Mais informações das rotas e documentação da API podem ser encontradas [AQUI
 
 ### Explicação
 
-Inicialmente, o usuário se encontrará na Landing Page (feita utilizando o framework React), onde haverá uma breve descrição do projeto, seus integrantes, etc.. Nesta página, também haverá um botão que redireciona o usuário para a página de cadastro, a qual consiste em um formulário.
+Inicialmente, o usuário se encontrará na Landing Page (feita utilizando a biblioteca React), onde haverá uma breve descrição do projeto, seus integrantes, etc.. Nesta página, também haverá um botão que redireciona o usuário para a página de cadastro, a qual consiste em um formulário.
 
 Nesta página, o usuário informará alguns dados pessoais:
 
