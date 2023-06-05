@@ -1,6 +1,16 @@
 # Flood Alert | Heliopolis
 
-introdução
+## Introdução
+
+Projeto desenvolvido junto à UNAS Heliópolis com a finalidade de alertar a população sobre possíveis enchentes na região.
+
+O projeto consiste em um sistema de alerta de enchentes, que utiliza dados de previsão do tempo para determinar se a região de Heliópolis está em risco de enchentes. Caso esteja, o sistema dispara um alerta em forma de mensagem via WhatsApp para todos os usuários cadastrados.
+
+Esta verificação é feita de duas formas:
+
+- **Durante o dia** - a cada 2 horas, o sistema realiza uma requisição à API de clima utilizada, e verifica os dados de previsão naquele momento. Assim, o sistema avisa as pessoas se existe de fato um risco de enchente neste instante.
+
+- **No final do dia** - às 20h, o sistema realiza a mesma requisição, mas para o dia seguinte. Desta forma, as pessoas são avisadas com antecedência sobre o risco de enchente, e podem se preparar a fim de minimizar as consequências negativas causadas por este evento.
 
 ---
 
@@ -105,7 +115,11 @@ Mais informações das rotas e documentação da API podem ser encontradas [AQUI
 <!-- imagem da pasta assets -->
 ![estrutura](/assets/diagrama.png)
 
-### Membros
+### Explicação
+
+
+
+## Membros
 
 * João Lucas de Moraes Barros Cadorniga  
 * Erik Soares  
