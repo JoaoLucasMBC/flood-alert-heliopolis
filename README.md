@@ -102,7 +102,8 @@ Mais informações das rotas e documentação da API podem ser encontradas [AQUI
 
 ## **Estrutura do Projeto**
 
-### *
+<!-- imagem da pasta assets -->
+![estrutura](/assets/diagrama.png)
 
 ### Membros
 
