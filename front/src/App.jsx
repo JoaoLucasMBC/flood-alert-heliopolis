@@ -40,7 +40,7 @@ function App() {
               
               <br/>
               <br/>
-              
+
               O objetivo deste projeto é alertar a população sobre possíveis
               enchentes para que as pessoas possam se preparar e, consequentemente, minimizar os impactos causados por este problema.
             </p>
@@ -106,7 +106,7 @@ function App() {
             <br/>
 
             <div id='button-form'>
-              <a href='https://online.forms.app/eriksoares/floodalert'>Formulário de inscrição</a>
+              <a href='https://forms.gle/jNAtzaL5X5Z8dyBY7'>Formulário de inscrição</a>
             </div>
           </div>
 
