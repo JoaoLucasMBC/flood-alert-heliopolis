@@ -133,6 +133,9 @@ As API de clima são utilizadas para verificar a previsão do tempo para a regi�
 
 A API relacionada ao envio de mensagens realiza justamente a função do disparo de mensagens via WhatsApp. Para isso, o sistema envia no grupo formado por todos os usuários cadastrados a mensagem com o alerta de enchente.
 
+### Diagrama da classe principal
+![diagrama](/assets/diagrama_de_classe.png)
+
 
 
 ## Membros
