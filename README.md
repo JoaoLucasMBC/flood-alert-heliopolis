@@ -122,7 +122,7 @@ Inicialmente, o usuário se encontrará na Landing Page (feita utilizando a bibl
 Nesta página, o usuário informará alguns dados pessoais:
 
 - Nome
-- Se mora em Heliópolis (caso sim será perguntada a região em que mora)
+- Se mora em Heliópolis (caso sim será perguntada a região / ponto de referência mais próximo da moradia)
 - Número de telefone (para receber o alerta via WhatsApp)
 
 Após o cadastro, o usuário será redirecionado para um link em que ele poderá entrar no grupo do WhatsApp, onde os alertas serão enviados. Além disso, já em relação ao back-end, o usuário será cadastrado no banco de dados através de uma rota em Flask (framework web em Python), a qual receberá os dados do formulário e os armazenará no banco de dados (POST).
