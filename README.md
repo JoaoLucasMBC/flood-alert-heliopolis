@@ -102,4 +102,13 @@ Mais informações das rotas e documentação da API podem ser encontradas [AQUI
 
 ## **Estrutura do Projeto**
 
+### *
+
 ### Membros
+
+* João Lucas de Moraes Barros Cadorniga  
+* Erik Soares  
+* Matheus Aguiar  
+* Leonardo Scarlato  
+* Gustavo Antony  
+* Sergio Ramella
