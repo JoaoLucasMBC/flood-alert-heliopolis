@@ -1,6 +1,6 @@
 import requests
 import datetime
-import os
+from environ import WEATHER_API_KEY
 
 def get_json_from_api(url):
     '''
@@ -56,7 +56,7 @@ def verify_risk_tomorrow():
     '''
 
     # pega o json da api
-    url = f'http://api.weatherapi.com/v1/forecast.json?key={os.environ.get("WEATHER_API_KEY")}&q=-23.606820,-46.596861&days=7'
+    url = f'http://api.weatherapi.com/v1/forecast.json?key={WEATHER_API_KEY}&q=-23.606820,-46.596861&days=7'
     json = get_json_from_api(url)
 
     try:

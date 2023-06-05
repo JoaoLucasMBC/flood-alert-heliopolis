@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request
 from model.models import UsuarioModel
 
-import os
+from environ import TYPEFORM_SECRET_KEY
 
 
 class ListUsuario(Resource):
@@ -47,7 +47,7 @@ class ListUsuario(Resource):
             return {'error': 'Permission denied.'}, 403
         
         # verifica se a chave secreta é válida
-        if(receivedSignature != os.environ.get('TYPEFORM_SECRET_KEY')):
+        if(receivedSignature != TYPEFORM_SECRET_KEY):
             return {'error': 'Invalid signature. Permission Denied.'}, 403
         
         # separa as perguntas e respostas do formulário
