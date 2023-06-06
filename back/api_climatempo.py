@@ -18,7 +18,7 @@ def verify_risk_climatempo():
     rain_amount = 0
     list_rain_amount = []
     try:
-        #adiciona por hora a quantidade de precipitação na precipitação total e na lista que será utilizada em um dos parâmetros 
+        #adiciona por hora a quantidade de precipitação na precipitação total e na lista que será utilizada em um dos parâmetros de escolha
         for hora in tomorrow_data:
             rain_amount += hora['rain']['preciptation']
             list_rain_amount += [hora['rain']['preciptation']]
