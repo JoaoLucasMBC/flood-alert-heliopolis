@@ -37,9 +37,7 @@ def sendWSP(message, apikey, gid=0):
 
 #################################################################
 # Testing Section
-msg2 = {"text":'''Boa noite! Há risco de chuva forte e alagamentos na sua região (06/06). Tenha cuidado amanhã!
-
-Atenção! Risco de alagamento na sua região, mantenha o cuidado ao sair de casa!'''}
+msg2 = {"text":'''Atenção! Risco de alagamento na sua região, mantenha o cuidado ao sair de casa!'''}
 
 myapikey = WHIN_API_KEY
 mygroup = GROUP_ID
