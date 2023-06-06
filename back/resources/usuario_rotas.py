@@ -46,6 +46,7 @@ class ListUsuario(Resource):
         if receivedSignature is None:
             return {'error': 'Permission denied.'}, 403
         
+        
         # verifica se a chave secreta é válida
         if(receivedSignature != TYPEFORM_SECRET_KEY):
             return {'error': 'Invalid signature. Permission Denied.'}, 403

@@ -16,11 +16,10 @@ class WeatherToday(Resource):
             json: mensagem de que há risco de enchente hoje
         '''
         if verify_risk_today():
-            print('tá chovendo pa caraio!')
-            msg2 = {"text":"Mensagem de que tá chovendo muito hoje"}
+            msg_risk_today = {"text":'''Atenção! Risco de alagamento na sua região, mantenha o cuidado ao sair de casa!'''}
             myapikey = WHIN_API_KEY
             mygroup = GROUP_ID
-            sendWSP(msg2, myapikey, mygroup)
+            sendWSP(msg_risk_today, myapikey, mygroup)
 
             return {'message': 'there is risk today'}, 200
         else:
@@ -38,11 +37,12 @@ class WeatherTomorrow(Resource):
             json: mensagem de que há risco de enchente amanhã
         '''
         if verify_risk_tomorrow():
-            print('tá chovendo pa caraio!')
-            msg2 = {"text":"Mensagem de que vai chover amanhã cpa"}
+            msg_risk_tomorrow = {"text":'''E aí, morador de Heliópolis!
+Tô passando pra te avisar que a previsão tá indicando possibilidade de chuva forte amanhã e risco de enchente. Pode não ser 100% certeza, mas é melhor se precaver, né?
+Até mais, galera!'''}
             myapikey = WHIN_API_KEY
             mygroup = GROUP_ID
-            sendWSP(msg2, myapikey, mygroup)
+            sendWSP(msg_risk_tomorrow, myapikey, mygroup)
 
             return {'message': 'there is risk tomorrow'}, 200
         else:
