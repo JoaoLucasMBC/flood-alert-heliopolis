@@ -1,0 +1,232 @@
+html{
+  scroll-behavior: smooth;
+}
+
+.image-container {
+  position: relative; /* Define a posição relativa para permitir posicionamento absoluto dos elementos filhos */
+  width: 100%; /* Defina a largura e altura da imagem conforme necessário */
+  height: 990px;
+  background-image: url('./assets/helipa.jpeg');
+  background-size: cover; /* Ajusta o tamanho da imagem para cobrir todo o elemento */
+  background-position: center; /* Centraliza a imagem horizontal e verticalmente */
+  box-shadow: 0 0 30px rgba(0, 0, 0, 1);
+}
+
+.text-overlay {
+  position: absolute; /* Define a posição absoluta para que o elemento fique em cima da imagem */
+  top: 50%; /* Ajusta a posição verticalmente */
+  left: 50%; /* Ajusta a posição horizontalmente */
+  transform: translate(-50%, -50%); /* Centraliza o elemento */
+  padding: 3% 3% ;
+  color: #fff; /* Define a cor do texto */
+  text-align: center; /* Centraliza o texto horizontalmente */
+  font-size: 2rem; /* Define o tamanho da fonte */
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500; /* Define o peso da fonte */
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  width: 50%;
+}
+
+.text-overlay h1 {
+  font-size: 4rem;
+  color: #fff;
+  margin-bottom: 2%;
+}
+
+.text-overlay ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.text-overlay ul li {
+  display: inline-block;
+  margin: 0 10px;
+  margin-top: 2%;
+}
+
+.text-overlay ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.5rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  background-color:  #006affd4;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.text-overlay ul li a:hover {
+  background-color: #00a6ffdd;
+  transition: all 0.3s ease;
+}
+
+.corpo {
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 5%;
+}
+
+.corpo h1 {
+  font-size: 3rem;
+  font-weight: 500;
+  color: #000;
+}
+
+.corpo p {
+  margin-top: 1%;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #000;
+  width: 70%;
+  margin-bottom: 2%;
+  margin-left: 0.2%;
+}
+
+.corpo .sobre-nos {
+  padding: 3%;
+  padding-top: 6%;
+  padding-bottom: 6%;
+}
+
+.sobre-nos {
+  display: flex;
+  align-items: center;
+}
+
+#sobre-nos-text {
+  width: 80%;
+  padding-right: 0%;
+}
+
+.sobre-nos img {
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(231, 23, 23, 0.914);
+  background-color: #fff;
+}
+
+
+.corpo .como-funciona {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 3%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+.corpo #como-funciona-text {
+  width: 80%;
+  padding-right: 0%;
+}
+
+.corpo .como-funciona img {
+  filter: drop-shadow(0 0 10px #084896);
+}
+
+.corpo .como-cadastrar {
+  display: flex;
+  align-items: center;
+  padding: 2%;
+  padding-bottom: 0%;
+}
+
+.corpo #como-cadastrar-text {
+  width: 80%;
+}
+
+.corpo .como-cadastrar img {
+  filter: drop-shadow(0 0 10px #963a08);
+}
+
+#button-form a{
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  background-color: #0073ff;
+  border-radius: 5px;
+  padding: 15px;
+  width: 15%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#button-form a:hover{
+  background-color: #2ca0ff;
+  transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 900px) {
+
+  img {
+    display: none;
+  }
+
+
+  .text-overlay {
+    width: 80%;
+    padding-bottom: 10%;
+    padding-top: 10%;
+  }
+
+  .text-overlay h1 {
+    font-size: 3rem;
+    margin-bottom: 10%;
+  }
+
+  .text-overlay ul li a {
+    font-size: 1.2rem;
+    padding: 10px 15px;
+  }
+
+  .corpo h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .corpo p {
+    width: 100%;
+    text-align: center;
+    margin-top: 5%;
+  }
+
+  .sobre-nos {
+    flex-direction: column;
+  }
+
+  .corpo .sobre-nos {
+    padding: 5%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+  }
+
+  .como-funciona {
+    flex-direction: column;
+  }
+
+  .corpo .como-funciona {
+    padding: 5%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+  }
+
+  .como-cadastrar {
+    flex-direction: column;
+  }
+
+  .corpo .como-cadastrar {
+    padding: 5%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+  }
+
+  #button-form a{
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+  }
+
+
+}
