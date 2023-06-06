@@ -37,7 +37,9 @@ class WeatherTomorrow(Resource):
             json: mensagem de que há risco de enchente amanhã
         '''
         if verify_risk_tomorrow():
-            msg_risk_tomorrow = {"text":'''Boa noite! Há risco de chuva forte e alagamentos na sua região. Tenha cuidado amanhã!'''}
+            msg_risk_tomorrow = {"text":'''E aí, morador de Heliópolis!
+Tô passando pra te avisar que a previsão tá indicando possibilidade de chuva forte amanhã e risco de enchente. Pode não ser 100% certeza, mas é melhor se precaver, né?
+Até mais, galera!'''}
             myapikey = WHIN_API_KEY
             mygroup = GROUP_ID
             sendWSP(msg_risk_tomorrow, myapikey, mygroup)
