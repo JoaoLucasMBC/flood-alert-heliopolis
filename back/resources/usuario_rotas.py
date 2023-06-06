@@ -46,26 +46,16 @@ class ListUsuario(Resource):
         if receivedSignature is None:
             return {'error': 'Permission denied.'}, 403
         
+        
         # verifica se a chave secreta é válida
         if(receivedSignature != TYPEFORM_SECRET_KEY):
             return {'error': 'Invalid signature. Permission Denied.'}, 403
         
-        # separa as perguntas e respostas do formulário
-        questions = request.json['form']['questions']
-        answers = request.json['answer']['answers']
 
         # para cada resposta, identifica a pergunta e salva o valor
-        for ans in answers:
-            ans_id = ans['q']
-
-            for ques in questions:
-                if ques['_id'] == ans_id:
-                    if 'nome' in ques['question']:
-                        nome  = ans['t']
-                    if 'celular' in ques['question']:
-                        numero = ans['t']
-                    if 'Em qual' in ques['question']:
-                        regiao = ans['c'][0]['t']
+        nome = request.json['Nome']
+        numero = request.json['NumeroCelular']
+        regiao = request.json['RegiaoHeliopolis']
 
 
         # cria o usuário
