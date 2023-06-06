@@ -35,17 +35,19 @@ def verify_risk_today(date=datetime.datetime.today().strftime('%Y-%m-%d')):
     @return: True se há risco, False se não há
     '''
     
-    url = f'http://api.weatherapi.com/v1/forecast.json?key={WEATHER_API_KEY}&q=-23.606820,-46.596861&dt={date}' 
+    url = f'http://api.weatherapi.com/v1/history.json?key={WEATHER_API_KEY}&q=-23.606820,-46.596861&dt={date}' 
     json = get_json_from_api(url) # pega o json da api
     
 
     try:
         precipitation = json['forecast']['forecastday'][0]['hour'] # pega a lista de informações sobre o as horas do dia atual
-    
+        sum_precip = 0
         for hour in precipitation:
+            sum_precip += hour['precip_mm']
             
-            if str(hour['time'][-5:-3]) == str(datetime.datetime.now().time().hour+2) :
-                if hour['precip_mm'] > 7.5 or hour['condition']['text'] == "Heavy rain":
+            if str(hour['time'][-5:-3]) == str(datetime.datetime.now().time().hour) :
+                
+                if sum_precip/datetime.datetime.now().time().hour > 7.5 or hour['condition']['text'] == "Heavy rain":
                     return True
 
         # if sum(precipitation) > 25 or sum(precipitation)/datetime.datetime.now().hour > 4: # verifica se a soma da precipitação é maior que 25mm ou se a média de precipitação por hora é maior que 4mm
