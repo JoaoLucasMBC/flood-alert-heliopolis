@@ -137,6 +137,15 @@ A API relacionada ao envio de mensagens realiza justamente a função do disparo
 ![diagrama](/assets/diagrama_de_classe.png)
 
 
+## Links extras
+
+### Formulário de inscrição - QR Code
+![qr](/assets/qr_code_forms.png)
+
+### Protótipo do projeto - Marvel App
+[Link para o protótipo](https://marvelapp.com/prototype/eggi78b)
+
+
 
 ## Membros
 
