@@ -53,21 +53,23 @@ def verify_risk_tomorrow(date=datetime.datetime.now()):
 
     @return: True se há risco, False se não há
     '''
+    #gera json com a previsão do tempo para as próximas 72 horas
     json = get_json_from_api("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3679/hours/72?token=b8cbc5c94d430ae14306197f0a396ddc")
+    #pega os dados do dia seguinte
     data = json['data']
     tomorrow_data = data[24:48]
-    rain_amount = 0
+    #variável que armazena a quantidade de precipitação por hora
     list_rain_amount = []
-    try:
-        #adiciona por hora a quantidade de precipitação na precipitação total e na lista que será utilizada em um dos parâmetros de escolha
-        for hora in tomorrow_data:
-            rain_amount += hora['rain']['preciptation']
-            list_rain_amount += [hora['rain']['preciptation']]
-    except:
-        print("Error")
+    
+    #adiciona por hora a quantidade de precipitação na lista que será utilizada nos parâmetros de escolha se há risco ou não
+    for hora in tomorrow_data:
+        try:
+            list_rain_amount.append(hora['rain']['precipitation'])
+        except:
+            return None
 
     #caso a precipitação total seja maior que 20 mm ou em alguma hora tenha chovido mais que 7.5mm
-    if (rain_amount > 20) or not all(x < 7.5 for x in list_rain_amount):
+    if (sum(list_rain_amount) > 20) or not all(x < 7.5 for x in list_rain_amount):
         return True
     return False
 
