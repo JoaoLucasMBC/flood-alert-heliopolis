@@ -8,6 +8,7 @@ from resources.usuario_rotas import Usuario, ListUsuario
 from resources.weather_rotas import WeatherToday, WeatherTomorrow
 
 from socket import gethostname
+from dotenv import load_dotenv
 
 
 # Resistente a sistema operacional
@@ -20,7 +21,6 @@ caminho_arq_db = src_folder / rel_arquivo_db
 
 # inicializa a aplicação
 app = Flask(__name__)
-sched = APScheduler()
 # inicializa o environment
 load_dotenv()
 
@@ -29,10 +29,6 @@ load_dotenv()
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{caminho_arq_db.resolve()}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 api = Api(app)
-
-
-def check_weather():
-   print('checked!')
 
 
 @app.route("/")
@@ -50,9 +46,6 @@ api.add_resource(WeatherTomorrow, '/weather/tomorrow')
 db.init_app(app)
 
 if __name__ == '__main__':
-    db.init_app(app)
-    sched.add_job(id='check_weather', func=check_weather, trigger='cron', day_of_week='mon-sun', hour=5, minute=0)
-    sched.start()
 
     # se não estiver rodando no servidor oficial, roda em modo debug
     if 'liveconsole' not in gethostname():
