@@ -44,4 +44,4 @@ if __name__ == '__main__':
 	myapikey = WHIN_API_KEY
 	mygroup = GROUP_ID
 
-sendWSP(msg2, myapikey, mygroup)
+	sendWSP(msg2, myapikey, mygroup)
