@@ -9,23 +9,15 @@ def get_json_from_api(url):
     @param url: url da api
     @return: json com os dados da api
     '''
-
-    response = requests.get(url) # faz a requisição
-    if response.status_code == 200: # verifica se a requisição foi bem sucedida
-        json_data = response.json() # transforma a resposta em json
-        return json_data
-    else:
+    try:
+        response = requests.get(url) # faz a requisição
+        if response.status_code == 200: # verifica se a requisição foi bem sucedida
+            json_data = response.json() # transforma a resposta em json
+            return json_data
+        else:
+            return None
+    except:
         return None
-    
-
-def create_url(date=datetime.datetime.today().strftime('%Y-%m-%d')):
-    '''
-    Função que cria a url para a api do open-meteo
-
-    @param date: data para a qual se quer a previsão do tempo
-    @return: url da api
-    '''
-    return f"https://api.open-meteo.com/v1/forecast?latitude=-23.6045&longitude=-46.5983&hourly=precipitation_probability,precipitation&daily=precipitation_sum&forecast_days=1&start_date={date}&end_date={date}&timezone=America%2FSao_Paulo"
 
 
 def verify_risk_today(date=datetime.datetime.today().strftime('%Y-%m-%d')):
@@ -41,17 +33,14 @@ def verify_risk_today(date=datetime.datetime.today().strftime('%Y-%m-%d')):
 
     try:
         precipitation = json['forecast']['forecastday'][0]['hour'] # pega a lista de informações sobre o as horas do dia atual
-        sum_precip = 0
-        for hour in precipitation:
-            sum_precip += hour['precip_mm']
-            
-            if str(hour['time'][-5:-3]) == str(datetime.datetime.now().time().hour) :
-                
-                if sum_precip/datetime.datetime.now().time().hour > 7.5 or hour['condition']['text'] == "Heavy rain":
-                    return True
+        hora_atual = datetime.datetime.now().time().hour - 1 # pega a hora atual
+        
+        # pega a precip das duas horas anteriores
+        precip = [precipitation[hora_atual], precipitation[hora_atual-1]]
+        
+        if sum(hour['precip_mm'] for hour in precip)/2 > 7.5 or not all(hour['precip_mm'] < 7.5 for hour in precip) or not all(hour['condition'] ['text'] != "Heavy rain" for hour in precip):
+            return True
 
-        # if sum(precipitation) > 25 or sum(precipitation)/datetime.datetime.now().hour > 4: # verifica se a soma da precipitação é maior que 25mm ou se a média de precipitação por hora é maior que 4mm
-        #     return True #Tem risco
         return False
     
     except: # se não tiver alguma chave no json por erro da API, retorna False
@@ -64,29 +53,23 @@ def verify_risk_tomorrow(date=datetime.datetime.now()):
 
     @return: True se há risco, False se não há
     '''
-    tomorrow_date = date + datetime.timedelta(days=1)
-    
-    # pega o json da api
-    url = f'http://api.weatherapi.com/v1/forecast.json?key={WEATHER_API_KEY}&q=-23.606820,-46.596861&dt={tomorrow_date}'
-    json = get_json_from_api(url)
-
-    chuva_moderada = False
-    chuva_forte = False
-
+    json = get_json_from_api("http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3679/hours/72?token=b8cbc5c94d430ae14306197f0a396ddc")
+    data = json['data']
+    tomorrow_data = data[24:48]
+    rain_amount = 0
+    list_rain_amount = []
     try:
-        tomorrow_precip = json['forecast']['forecastday'][1]['day']['totalprecip_mm'] # pega o total da precipitação do dia seguinte
-        tomorrow_condition_text = json['forecast']['forecastday'][1]['day']['condition']['text'] # pega o texto de condição do clima do dia seguinte
+        #adiciona por hora a quantidade de precipitação na precipitação total e na lista que será utilizada em um dos parâmetros de escolha
+        for hora in tomorrow_data:
+            rain_amount += hora['rain']['preciptation']
+            list_rain_amount += [hora['rain']['preciptation']]
+    except:
+        print("Error")
 
-        if tomorrow_precip > 10 and tomorrow_precip < 20 or tomorrow_condition_text == "Moderate rain": # verifica se a precipitação esta entre 10mm e 20mm ou o texto de condição indica chuva moderada
-            chuva_moderada = True # Tem risco moderado
-
-        elif tomorrow_precip >= 20 or tomorrow_condition_text == "Heavy rain": # verifica se a precipitação é maior que 20mm ou o texto de condição indica chuva forte
-            chuva_forte = True #Tem risco de chuva forte
-            
-        return chuva_moderada, chuva_forte
-    
-    except: # se não tiver alguma chave no json por erro da API, retorna False
-        return False
+    #caso a precipitação total seja maior que 20 mm ou em alguma hora tenha chovido mais que 7.5mm
+    if (rain_amount > 20) or not all(x < 7.5 for x in list_rain_amount):
+        return True
+    return False
 
 
 if __name__ == "__main__":
