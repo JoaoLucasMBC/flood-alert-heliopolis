@@ -8,9 +8,11 @@ O projeto consiste em um sistema de alerta de enchentes, que utiliza dados de pr
 
 Esta verificação é feita de duas formas:
 
-- **Durante o dia** - a cada 2 horas, o sistema realiza uma requisição à API de clima utilizada, e verifica os dados de previsão naquele momento. Assim, o sistema avisa as pessoas se existe de fato um risco de enchente neste instante.
+- **Durante o dia** - a cada 2 horas, o sistema realiza uma requisição à API (Weather API) de clima utilizada, e verifica os dados de previsão naquele momento. Assim, o sistema avisa as pessoas se existe de fato um risco de enchente neste instante.
 
-- **No final do dia** - às 20h, o sistema realiza a mesma requisição, mas para o dia seguinte. Desta forma, as pessoas são avisadas com antecedência sobre o risco de enchente, e podem se preparar a fim de minimizar as consequências negativas causadas por este evento.
+- **No final do dia** - às 20h, o sistema realiza outra requisição (Climatempo API), mas para o dia seguinte. Desta forma, as pessoas são avisadas com antecedência sobre o risco de enchente, e podem se preparar a fim de minimizar as consequências negativas causadas por este evento.
+
+[Histórias de usuário](https://drive.google.com/file/d/1qu_1gzWxWdaefDLLHqdGvIvJXlVgnTaI/view?usp=sharing)
 
 ---
 
@@ -117,24 +119,46 @@ Mais informações das rotas e documentação da API podem ser encontradas [AQUI
 
 ### Explicação
 
-Inicialmente, o usuário se encontrará na Landing Page (feita utilizando a biblioteca React), onde haverá uma breve descrição do projeto, seus integrantes, etc.. Nesta página, também haverá um botão que redireciona o usuário para a página de cadastro, a qual consiste em um formulário.
+Inicialmente, o usuário se encontrará na Landing Page (feita utilizando a biblioteca React), onde haverá uma breve descrição do projeto, seus integrantes, etc.. Nesta página, também haverá um botão que redireciona o usuário para o formulário de cadastro (QR Code de acesso no **final do README**).
 
-Nesta página, o usuário informará alguns dados pessoais:
+Nele, o usuário informará alguns dados pessoais:
 
 - Nome
 - Se mora em Heliópolis (caso sim será perguntada a região / ponto de referência mais próximo da moradia)
 - Número de telefone (para receber o alerta via WhatsApp)
 
-Após o cadastro, o usuário será redirecionado para um link em que ele poderá entrar no grupo do WhatsApp, onde os alertas serão enviados. Além disso, já em relação ao back-end, o usuário será cadastrado no banco de dados através de uma rota em Flask (framework web em Python), a qual receberá os dados do formulário e os armazenará no banco de dados (POST).
+Após o cadastro, o usuário será redirecionado para um link em que ele poderá entrar no grupo do WhatsApp, onde os alertas serão enviados. As mensagens são em grupo visando minimzar o gasto do projeto com API's de disparo.
 
-Com o usuário já cadastrado no sistema, para que este receba os alertas de enchente, são utilizadas quatro APIs: três para a questão do clima (WeatherAPI, Climatempo e Open-Meteo) e outra para o envio de mensagens via WhatsApp (Whin). 
+Além disso, já em relação ao back-end, o usuário será cadastrado no banco de dados através de uma rota em Flask (framework web em Python), a qual receberá os dados do formulário e os armazenará no banco de dados SQL (requisição POST). Vale ressaltar que essa requisição só sera executada na base se for passada uma chave de segurança no *header*, aumentando a segurança da aplicação.
 
-As API de clima são utilizadas para verificar a previsão do tempo para a região de Heliópolis, e a partir dos dados coletados, o sistema determina se há risco de enchente ou não. Desta forma, o sistema dispara um alerta para todos os usuários cadastrados, informando-os sobre a situação naquele momento, e também sobre a previsão para o dia seguinte por volta das 20h.
+Com o usuário já cadastrado no sistema, para que este receba os alertas de enchente, são utilizadas três APIs: duas para a checagem do clima (WeatherAPI, Climatempo) e outra para o envio de mensagens via WhatsApp (Whin). 
 
-A API relacionada ao envio de mensagens realiza justamente a função do disparo de mensagens via WhatsApp. Para isso, o sistema envia no grupo formado por todos os usuários cadastrados a mensagem com o alerta de enchente.
+As API de clima são utilizadas para verificar a previsão do tempo para a região de Heliópolis, e a partir dos dados coletados, o sistema determina se há risco de enchente ou não. Os parâmetros escolhidos foram baseados nas datas quando houve enchentes na região seguindo a UNAS. Desta forma, o sistema dispara um alerta para todos os usuários cadastrados, informando-os sobre a situação naquele momento, e também sobre a previsão para o dia seguinte às 20h. Além disso, a cada 2h, checamos a previsão do próprio dia para caso esteja acontecendo uma chuva muito forte que pode causar uma enchente.
+
+*OBS: as checagens são ativadas por um script hospedado em um servidor AWS, que faz requisições constantes no backend*
+
+A API relacionada ao envio de mensagens realiza justamente a função do disparo de mensagens via WhatsApp. Para isso, o sistema envia no grupo formado por todos os usuários cadastrados a mensagem com o alerta de enchente. Ela foi escolhida visando a minimização de custos, já que ela possui 20 requisições gratuitas por mês.
+
+### Dependências
+
+Como citado, as dependências do projeto são as API's utilizadas e o servidor AWS para o *scheduler*, além de poucas bibliotecas utilizadas no back-end.
+
+* Para bibliotecas, basta seguir o passo a passo de instalação apresentado anteriormente
+
+* **AWS**: servidor que possa rodar um script *nohangup* para realizar as requisições. Inicialmente cedido por **Insper**.
+
+* **API Climatempo**: é utilizado um token de uma conta do grupo para realizar as requisições. Há limite mas por ser apenas uma vez por dia que a utilizamos, não chegamos nem próximos dele.
+
+* **Weather API**: utiliza token armazenado no arquivo de **environment**. Utiliza as coordenadas de Heliópolis para encontrar a estação mais próxima.
+
+* **Whin API**: necessidta de token de autenticação do ID do grupo da plataforma. Ambos armazenados no environment e importados quanto utilizados. 
+
+*Todas as contas são mantidas pelo grupo de forma gratuita, evitando problemas futuros. No entanto, as configurações separadas foram feitas para que seja simples alterar para uma outra conta, caso necessário*.
 
 ### Diagrama da classe principal
 ![diagrama](/assets/diagrama_de_classe.png)
+
+A única entidade da base são os usuários que se cadastram. Além de simplificar o armazenamento de dados, eles poderão ser utilizados posteriormente pela UNAS em outros projetos para contatar moradores interessados ou em integração com outros projetos de previsão do tempo.
 
 
 ## Links extras
